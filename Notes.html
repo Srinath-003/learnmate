@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnMate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f0f2f5;
+            --text-color: #333;
+            --light-text: #777;
+            --border-color: #ddd;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --white: #fff;
+            --light-bg: #f8f9fa;
+            --shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+       
+        .nav-bar {
+      background: linear-gradient(to right, #f0f2f3, #0072ff);
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-bar h2 {
+      font-size: 1.2rem;
+      background: linear-gradient(to right, #000000, #000000, #000000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0);
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    
+
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            background: linear-gradient(45deg, var(--primary-color), #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+       
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .notes-form {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 120px;
+        }
+
+        .form-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-title i {
+            color: var(--primary-color);
+            background: linear-gradient(45deg, var(--primary-color), #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-size: 16px;
+            background: var(--light-bg);
+            transition: var(--transition);
+            font-family: inherit;
+            resize: none;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(74, 107, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input::placeholder {
+            color: var(--light-text);
+        }
+
+        textarea.form-input {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        .file-upload-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload-area:hover, 
+        .file-upload-area.dragover {
+            border-color: var(--primary-color);
+            background: rgba(74, 107, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-area.has-file {
+            border-color: var(--success-color);
+            background: rgba(40, 167, 69, 0.05);
+        }
+
+        .file-upload-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .file-upload-text {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 8px;
+        }
+
+        .file-upload-hint {
+            font-size: 12px;
+            color: var(--light-text);
+            opacity: 0.7;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .uploaded-files {
+            margin-top: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .file-item:hover {
+            background: var(--light-bg);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .file-icon {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .file-name {
+            font-size: 14px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: var(--light-text);
+            margin-left: 8px;
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .file-remove:hover {
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 107, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 107, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-bg);
+            border-color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger-color), #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .error {
+            background: linear-gradient(45deg, #ffebee, #ffcdd2);
+            color: #c62828;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .success {
+            background: linear-gradient(45deg, #e8f5e8, #c8e6c9);
+            color: #2e7d32;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .notes-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary-color);
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .note-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            border: 1px solid rgba(74, 107, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), #764ba2);
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .note-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .note-privacy {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .privacy-public {
+            background: linear-gradient(45deg, #e8f5e8, #c8e6c9);
+            color: #2e7d32;
+        }
+
+        .privacy-private {
+            background: linear-gradient(45deg, #ffebee, #ffcdd2);
+            color: #c62828;
+        }
+
+        .note-content {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: var(--light-text);
+        }
+
+        .note-attachments {
+            margin-bottom: 15px;
+        }
+
+        .attachment-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .attachment-item:hover {
+            background: var(--secondary-color);
+        }
+
+        .attachment-icon {
+            color: var(--primary-color);
+            font-size: 10px;
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--light-text);
+            padding-top: 15px;
+            border-top: 1px solid var(--secondary-color);
+        }
+
+        .note-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-text);
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .loading i {
+            font-size: 40px;
+            color: var(--primary-color);
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-notes {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-text);
+            font-style: italic;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .no-notes i {
+            font-size: 60px;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+            .nav-info {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    .nav-info a, .profile-dropdown-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgb(0, 0, 0);
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition:  0.3s, transform 0.3s;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-info a i, .profile-dropdown-btn i {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
+
+    .nav-info a:hover, .profile-dropdown-btn:hover {
+      background: rgb(172, 165, 237);
+    }
+
+    
+
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .notes-form {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .nav-bar {
+                padding: 15px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .notes-form {
+                padding: 25px;
+            }
+            
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .note-card {
+                padding: 20px;
+            }
+        }
+        
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.nav-info {
+    display: flex;
+    justify-content: center;
+    gap: o.5rem;
+    padding: 0.5rem 1rem;
+    font-family: 'Poppins', sans-serif;
+    flex-wrap: wrap;
+    border-radius: 1rem;
+}
+
+.nav-info a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+.nav-info a i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-info a span {
+    font-size: 1rem;
+}
+
+.nav-info a:hover {
+    background-color: #f0f0f0;
+    color: #0077ff;
+    transform: translateY(-2px);
+}
+
+.nav-info a:hover i {
+    transform: scale(1.2);
+    color: #0077ff;
+}
+
+@media (max-width: 768px) {
+    .nav-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-info a {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+        
+
+   
+    }
+
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="logo">
+            <i class="fa-solid fa-note-sticky"></i>
+                LearnMate
+        </div>
+        <div class="nav-info">
+            <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="About.html"><i class="fas fa-info-circle"></i><span>About</span></a>
+            <a href="Course.html"><i class="fas fa-book-open"></i><span>Courses</span></a>
+            <a href="Contact.html"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fa-solid fa-sparkles"></i> Your Digital Notes</h1>
+            <p>Create, manage, and organize your thoughts beautifully</p>
+        </div>
+
+        <div class="main-content">
+            <div class="notes-form">
+                <div class="form-title">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span id="formTitle">Create New Note</span>
+                </div>
+                
+                <div id="message"></div>
+
+                <form id="noteForm">
+                    <div class="form-group">
+                        <label for="title"><i class="fa-solid fa-heading"></i> Title</label>
+                        <input type="text" id="title" name="title" class="form-input" placeholder="Enter your note title..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="content"><i class="fa-solid fa-pen"></i> Content</label>
+                        <textarea id="content" name="content" class="form-input" placeholder="Write your thoughts here..." required></textarea>
+                    </div>
+                    
+                    <div class="file-upload-container">
+                        <label><i class="fa-solid fa-paperclip"></i> Attachments</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" class="file-input" id="fileInput" multiple>
+                            <div class="file-upload-icon">
+                                <i class="fa-solid fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                Click to browse or drag and drop files here
+                            </div>
+                            <div class="file-upload-hint">
+                                Support for all file types (Max 10MB per file)
+                            </div>
+                        </div>
+                        <div class="uploaded-files" id="uploadedFiles"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="privacy"><i class="fa-solid fa-shield-alt"></i> Privacy</label>
+                        <select id="privacy" name="privacy" class="form-input">
+                            <option value="private">🔒 Private</option>
+                            <option value="public">🌍 Public</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fa-solid fa-save"></i>
+                            Save Note
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="cancelEdit()" style="display: none;">
+                            <i class="fa-solid fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="notes-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-folder-open"></i>
+                        My Notes
+                    </div>
+                </div>
+                
+                <div id="notesContainer">
+                    <div class="loading">
+                        <i class="fa-solid fa-spinner"></i>
+                        <span>Loading your notes...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let editingNoteId = null;
+        let uploadedFiles = [];
+        const API_BASE = 'http://localhost:3000/api';
+        
+        // Get user email (you can modify this based on your authentication system)
+        const userEmail = 'user@example.com'; // Replace with actual user email from login
+
+        // Load notes when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotes();
+            setupFileUpload();
+            
+            // Handle form submission
+            document.getElementById('noteForm').addEventListener('submit', handleSubmit);
+        });
+
+        // Setup file upload functionality
+        function setupFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            
+            // Click to upload
+            fileUploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // File selection
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('dragover');
+            });
+            
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                handleFileSelect({ target: { files: e.dataTransfer.files } });
+            });
+        }
+
+        // Handle file selection
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            
+            files.forEach(file => {
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    showMessage(`File "${file.name}" is too large. Maximum size is 10MB.`, 'error');
+                    return;
+                }
+                
+                // Add file to uploaded files array
+                const fileObj = {
+                    id: Date.now() + Math.random(),
+                    file: file,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                };
+                
+                uploadedFiles.push(fileObj);
+            });
+            
+            // Reset file input
+            e.target.value = '';
+            
+            // Update UI
+            updateFileDisplay();
+        }
+
+        // Update file display
+        function updateFileDisplay() {
+            const container = document.getElementById('uploadedFiles');
+            const uploadArea = document.getElementById('fileUploadArea');
+            
+            if (uploadedFiles.length === 0) {
+                container.innerHTML = '';
+                uploadArea.classList.remove('has-file');
+                return;
+            }
+            
+            uploadArea.classList.add('has-file');
+            
+            const filesHTML = uploadedFiles.map(fileObj => `
+                <div class="file-item">
+                    <div class="file-info">
+                        <i class="file-icon ${getFileIcon(fileObj.type)}"></i>
+                        <span class="file-name">${escapeHtml(fileObj.name)}</span>
+                        <span class="file-size">(${formatFileSize(fileObj.size)})</span>
+                    </div>
+                    <button type="button" class="file-remove" onclick="removeFile('${fileObj.id}')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            container.innerHTML = filesHTML;
+        }
+
+        // Remove file
+        function removeFile(fileId) {
+            uploadedFiles = uploadedFiles.filter(file => file.id != fileId);
+            updateFileDisplay();
+        }
+
+        // Get file icon based on type
+        function getFileIcon(fileType) {
+            if (fileType.startsWith('image/')) return 'fa-solid fa-image';
+            if (fileType.startsWith('video/')) return 'fa-solid fa-video';
+            if (fileType.startsWith('audio/')) return 'fa-solid fa-volume-up';
+            if (fileType.includes('pdf')) return 'fa-solid fa-file-pdf';
+            if (fileType.includes('word')) return 'fa-solid fa-file-word';
+            if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'fa-solid fa-file-excel';
+            if (fileType.includes('powerpoint') || fileType.includes('presentation')) return 'fa-solid fa-file-powerpoint';
+            if (fileType.includes('zip') || fileType.includes('rar')) return 'fa-solid fa-file-archive';
+            if (fileType.startsWith('text/')) return 'fa-solid fa-file-alt';
+            return 'fa-solid fa-file';
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Handle form submission
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value.trim();
+            const content = document.getElementById('content').value.trim();
+            const privacy = document.getElementById('privacy').value;
+            
+            if (!title || !content) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Prepare file names for storage (in a real app, you'd upload files to a server)
+            const attachments = uploadedFiles.map(fileObj => ({
+                name: fileObj.name,
+                size: fileObj.size,
+                type: fileObj.type
+            }));
+            
+            const noteData = {
+                title,
+                content,
+                privacy,
+                userEmail,
+                attachments
+            };
+            
+            try {
+                let response;
+                
+                if (editingNoteId) {
+                    // Update existing note
+                    response = await fetch(`${API_BASE}/notes/${editingNoteId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(noteData)
+                    });
+                } else {
+                    // Create new note
+                    response = await fetch(`${API_BASE}/notes`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(noteData)
+                    });
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save note');
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(editingNoteId ? 'Note updated successfully!' : 'Note created successfully!', 'success');
+                    clearForm();
+                    loadNotes();
+                } else {
+                    throw new Error(result.error || 'Failed to save note');
+                }
+                
+            } catch (error) {
+                console.error('Error saving note:', error);
+                showMessage('Error saving note: ' + error.message, 'error');
+            }
+        }
+
+        // Load all notes
+        async function loadNotes() {
+            try {
+                const response = await fetch(`${API_BASE}/notes?email=${encodeURIComponent(userEmail)}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load notes');
+                }
+                
+                const notes = await response.json();
+                renderNotes(notes);
+                
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                document.getElementById('notesContainer').innerHTML = 
+                    '<div class="message error"><i class="fa-solid fa-exclamation-triangle"></i>Error loading notes: ' + error.message + '</div>';
+            }
+        }
+
+        // Render notes to the page
+        function renderNotes(notes) {
+            const container = document.getElementById('notesContainer');
+            
+            if (notes.length === 0) {
+                container.innerHTML = `
+                    <div class="no-notes">
+                        <i class="fa-solid fa-sticky-note"></i>
+                        <div>
+                            <h3>No notes yet</h3>
+                            <p>Create your first note using the form on the left!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const notesHTML = notes.map(note => {
+                const attachmentsHTML = note.attachments && note.attachments.length > 0 ? `
+                    <div class="note-attachments">
+                        <div class="attachment-list">
+                            ${note.attachments.map(attachment => `
+                                <div class="attachment-item">
+                                    <i class="attachment-icon ${getFileIcon(attachment.type)}"></i>
+                                    <span>${escapeHtml(attachment.name)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : '';
+                
+                return `
+                    <div class="note-card">
+                        <div class="note-header">
+                            <h3 class="note-title">${escapeHtml(note.title)}</h3>
+                            <span class="note-privacy privacy-${note.privacy}">
+                                ${note.privacy === 'public' ? '🌍' : '🔒'} ${note.privacy}
+                            </span>
+                        </div>
+                        <div class="note-content">
+                            ${escapeHtml(note.content).substring(0, 150)}${note.content.length > 150 ? '...' : ''}
+                        </div>
+                        ${attachmentsHTML}
+                        <div class="note-footer">
+                            <div class="note-date">
+                                <i class="fa-solid fa-calendar"></i>
+                                <span>${formatDate(note.createdAt)}</span>
+                            </div>
+                            <div class="note-actions">
+                                <button class="btn btn-small btn-secondary" onclick="editNote('${note._id}')">
+                                    <i class="fa-solid fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-small btn-danger" onclick="deleteNote('${note._id}')">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = `<div class="notes-grid">${notesHTML}</div>`;
+        }
+        // Edit note function
+        async function editNote(noteId) {
+            try {
+                const response = await fetch(`${API_BASE}/notes/${noteId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load note');
+                }
+                
+                const note = await response.json();
+                
+                // Populate form with note data
+                document.getElementById('title').value = note.title;
+                document.getElementById('content').value = note.content;
+                document.getElementById('privacy').value = note.privacy;
+                
+                // Set editing state
+                editingNoteId = noteId;
+                document.getElementById('formTitle').textContent = 'Edit Note';
+                document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-save"></i> Update Note';
+                document.getElementById('cancelBtn').style.display = 'inline-flex';
+                
+                // Handle attachments if they exist
+                if (note.attachments && note.attachments.length > 0) {
+                    uploadedFiles = note.attachments.map(attachment => ({
+                        id: Date.now() + Math.random(),
+                        name: attachment.name,
+                        size: attachment.size,
+                        type: attachment.type,
+                        existing: true // Mark as existing file
+                    }));
+                    updateFileDisplay();
+                }
+                
+                // Scroll to form
+                document.querySelector('.notes-form').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Error loading note for editing:', error);
+                showMessage('Error loading note: ' + error.message, 'error');
+            }
+        }
+
+        // Delete note function
+        async function deleteNote(noteId) {
+            if (!confirm('Are you sure you want to delete this note? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/notes/${noteId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to delete note');
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage('Note deleted successfully!', 'success');
+                    
+                    // If we're editing this note, cancel edit mode
+                    if (editingNoteId === noteId) {
+                        cancelEdit();
+                    }
+                    
+                    loadNotes();
+                } else {
+                    throw new Error(result.error || 'Failed to delete note');
+                }
+                
+            } catch (error) {
+                console.error('Error deleting note:', error);
+                showMessage('Error deleting note: ' + error.message, 'error');
+            }
+        }
+
+        // Cancel edit function
+        function cancelEdit() {
+            editingNoteId = null;
+            document.getElementById('formTitle').textContent = 'Create New Note';
+            document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-save"></i> Save Note';
+            document.getElementById('cancelBtn').style.display = 'none';
+            clearForm();
+        }
+
+        // Clear form function
+        function clearForm() {
+            document.getElementById('noteForm').reset();
+            uploadedFiles = [];
+            updateFileDisplay();
+            clearMessage();
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            const iconClass = type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle';
+            
+            messageDiv.innerHTML = `
+                <div class="message ${type}">
+                    <i class="fa-solid ${iconClass}"></i>
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => {
+                    clearMessage();
+                }, 5000);
+            }
+        }
+
+        // Clear message function
+        function clearMessage() {
+            document.getElementById('message').innerHTML = '';
+        }
+
+        // Format date function
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) {
+                return 'Today';
+            } else if (diffDays === 2) {
+                return 'Yesterday';
+            } else if (diffDays <= 7) {
+                return `${diffDays - 1} days ago`;
+            } else {
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+        }
+
+        // Escape HTML function to prevent XSS
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Search functionality (optional enhancement)
+        function addSearchFunctionality() {
+            const searchHTML = `
+                <div class="search-container" style="margin-bottom: 20px;">
+    <div class="form-group" style="position: relative;">
+        <input type="text" id="searchInput" class="form-input" placeholder="Search notes..." style="padding-left: 40px;">
+        <i class="fa-solid fa-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--light-text);"></i>
+    </div>
+</div>
+            `;
+            
+            // Insert search box before notes grid
+            const notesSection = document.querySelector('.notes-section');
+            const sectionHeader = notesSection.querySelector('.section-header');
+            sectionHeader.insertAdjacentHTML('afterend', searchHTML);
+            
+            // Add search functionality
+            const searchInput = document.getElementById('searchInput');
+            let debounceTimer;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    filterNotes(this.value.toLowerCase());
+                }, 300);
+            });
+        }
+
+        // Filter notes based on search term
+        function filterNotes(searchTerm) {
+            const noteCards = document.querySelectorAll('.note-card');
+            
+            noteCards.forEach(card => {
+                const title = card.querySelector('.note-title').textContent.toLowerCase();
+                const content = card.querySelector('.note-content').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize search functionality after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a small delay to ensure the notes section is rendered
+            setTimeout(() => {
+                addSearchFunctionality();
+            }, 1000);
+        });
+
+        // Handle network errors and offline functionality
+        window.addEventListener('online', function() {
+            showMessage('Connection restored. Syncing data...', 'success');
+            loadNotes();
+        });
+
+        window.addEventListener('offline', function() {
+            showMessage('You are offline. Changes will be saved when connection is restored.', 'error');
+        });
+
+        // Auto-save functionality (optional enhancement)
+        function setupAutoSave() {
+            const titleInput = document.getElementById('title');
+            const contentInput = document.getElementById('content');
+            let autoSaveTimer;
+            
+            function autoSave() {
+                const title = titleInput.value.trim();
+                const content = contentInput.value.trim();
+                
+                if (title && content && editingNoteId) {
+                    // Only auto-save if we're editing an existing note
+                    clearTimeout(autoSaveTimer);
+                    autoSaveTimer = setTimeout(() => {
+                        // Save draft (you could implement a draft system here)
+                        console.log('Auto-saving draft...');
+                    }, 2000);
+                }
+            }
+            
+            titleInput.addEventListener('input', autoSave);
+            contentInput.addEventListener('input', autoSave);
+        }
+
+        // Call setup functions
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAutoSave();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+S or Cmd+S to save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                document.getElementById('noteForm').dispatchEvent(new Event('submit'));
+            }
+            
+            // Escape key to cancel edit
+            if (e.key === 'Escape' && editingNoteId) {
+                cancelEdit();
+            }
+        });
+
+        // Performance optimization: Virtual scrolling for large note lists
+        function enableVirtualScrolling() {
+            // This would be implemented for apps with thousands of notes
+            // For now, we'll use pagination instead
+        }
+
+        // Add pagination if there are many notes
+        let currentPage = 1;
+        const notesPerPage = 12;
+
+        function renderNotesWithPagination(allNotes) {
+            const startIndex = (currentPage - 1) * notesPerPage;
+            const endIndex = startIndex + notesPerPage;
+            const notesToShow = allNotes.slice(startIndex, endIndex);
+            
+            renderNotes(notesToShow);
+            
+            // Add pagination controls if needed
+            if (allNotes.length > notesPerPage) {
+                addPaginationControls(allNotes.length);
+            }
+        }
+
+        function addPaginationControls(totalNotes) {
+            const totalPages = Math.ceil(totalNotes / notesPerPage);
+            
+            if (totalPages <= 1) return;
+            
+            const paginationHTML = `
+                <div class="pagination" style="margin-top: 30px; text-align: center;">
+                    <button class="btn btn-secondary btn-small" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fa-solid fa-chevron-left"></i> Previous
+                    </button>
+                    <span style="margin: 0 20px; color: var(--text-color);">
+                        Page ${currentPage} of ${totalPages}
+                    </span>
+                    <button class="btn btn-secondary btn-small" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                        Next <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('notesContainer').insertAdjacentHTML('beforeend', paginationHTML);
+        }
+
+        function changePage(newPage) {
+            currentPage = newPage;
+            loadNotes();
+        }
+    </script>
+</body>
+</html>
